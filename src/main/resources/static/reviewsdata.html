@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Review Details" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>    
+    <script src="./js/review.js"></script>
+    <style>
+        .form-group{
+            margin: 2rem; box-shadow: rgb(211, 211, 211) 0px 0px 10px;
+        }
+    </style>
+    <script> 
+        $(function(){
+          $("#includedContent").load("Navbar.html"); 
+        });
+        </script> 
+</head>
+<body>  
+    <div id="includedContent"></div> 
+    <div class="container">
+		<div id="parent" class="row">	
+        </div>
+        <script>
+            $( document ).ready(async function() {
+              var city = localStorage.getItem("city");
+              var name = localStorage.getItem("name");
+           
+              
+              var url= "http://127.0.0.1:8082/reviewbycityandname/"+city+"/"+name;
+              let response = await fetch(url);
+              if(response.ok){
+                let data1 = await response.json();
+                for(var i=0;i<data1.length;i++){
+						var obj=data1[i];
+						
+						var newDiv = document.createElement('div');
+                         newDiv.id="n"+i;
+
+                         newDiv.className="form-group col-md-3";
+                        $(".form-group").css({ "margin": "2rem","box-shadow": "0 0 10px #D3D3D3"});
+                        
+                            var label = document.createElement("LABEL");
+						    var h2 = document.createElement('h2');
+                            h2.innerHTML=obj.coachingname;	
+                            label.innerHTML="Name : "
+                            $("h2").css({"color":"black","font-size":"30px"});
+                            newDiv.appendChild(label);
+							newDiv.appendChild(h2);
+
+                            var label = document.createElement("LABEL");
+							var h2=document.createElement('h2');
+                            h2.innerHTML=obj.coachingcity;
+                            label.innerHTML="City : "
+							console.log(obj.coachingcity)
+                            $("h2").css({"color":"red","font-size":"15px"});
+                            newDiv.appendChild(label);
+							newDiv.appendChild(h2);
+
+                            var label = document.createElement("LABEL");
+							var p=document.createElement('p');
+                            p.innerHTML=obj.pros;
+                            label.innerHTML="Pros : "
+                            $("p").css({"display":"block","font-size":"20px"});
+                            newDiv.appendChild(label);
+							newDiv.appendChild(p);    
+                        
+                            var label = document.createElement("LABEL");
+							var p=document.createElement('p');
+                            p.innerHTML=obj.cons;
+                            label.innerHTML="Cons : "
+                            $("p").css({"display":"block","font-size":"20px"});
+                            newDiv.appendChild(label);
+							newDiv.appendChild(p); 
+                            
+                            var label = document.createElement("LABEL");
+							var p=document.createElement('p');
+                            p.innerHTML=obj.suggestions;
+                            label.innerHTML="Suggestions : "
+                            $("p").css({"display":"block","font-size":"20px"});
+                            newDiv.appendChild(label);
+                            newDiv.appendChild(p); 
+                            
+                            
+
+                            var button =document.createElement('button');
+                            button.innerHTML="More Details";
+                            newDiv.appendChild(button);
+                            button.id= i;
+                            console.log(button.id);
+                            urltogo=obj.url;
+                            console.log(urltogo)
+                          
+                            $("#parent").css({"width":"100%","min-height":"100px"});
+                           document.getElementById("parent").appendChild(newDiv);
+                         }
+
+                         $('button').on("click",  function(e){
+                             ///getcoachingbyid/{id}
+                             var obj1=data1[this.id]
+                             console.log(obj1.id)
+                             var id=obj1.id;
+                             localStorage.setItem("id",id);
+                             window.location.href='http://127.0.0.1:8082/alldetail.html';
+                            // window.open("http://127.0.0.1:8082/alldetail.html")
+                            });
+              }else{
+                  alert('HTTP Error',response.status);
+              }          
+    });
+        </script>
+    </div> 
+</body>
+</html>

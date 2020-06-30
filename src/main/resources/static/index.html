@@ -1,0 +1,386 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<title>CoachingDekho</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" media="screen" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+	<link rel="stylesheet" href="./css/main1.css">
+	<link rel="stylesheet" href="./css/footer.css">
+<style>
+	.aboutus{
+		height: auto;
+		margin-bottom: 100px;
+		margin-top: 100px;
+		box-shadow: 0 0 10px #D3D3D3;
+		padding-bottom: 20px;
+	}
+	footer {
+  display: block;
+}
+</style>
+<script> 
+	$(function(){
+	  $("#includedContent").load("Navbar.html");
+	  $("#includedContentfooter").load("footer.html"); 
+	});
+	</script> 
+</head>
+<body>  
+<div id="includedContent"></div> 
+	<!-- Navbar End -->
+
+	<!-- <a href="news.html">GO Main</a> -->
+	
+	<div class="row" id="home">
+		<div class="col-md-4 post">
+			<form  class="form-horizontal reviewhome" autocomplete="off">
+				<h3>Read Coachings/Institute Reviews</h3> <br />
+				<div class="form-group">
+				<label for="City">City:</label>
+				<!-- onkeypress="mycity()" -->
+				 <input type="text" class="form-control" id="ccity" placeholder="Type City" >
+				 </div>
+				 <div class="form-group">
+					 <!-- onkeypress="mycoachingname()" -->
+				  <label for="Type">Coaching Name:</label>
+				   <input type="text" class="form-control" placeholder="Type Name of Coaching" id="cname">
+				   </div>
+	
+					<button type="button" class="  btn-primary" onclick="allReviews()">Search</button>
+		</form>
+		</div>
+		<div class="col-md-4 post">
+			<form class="form-horizontal" id ="coachingsearch" autocomplete="off">
+				<h3>Search Coachings/Institute</h3>  <br />
+				<div class="form-group">
+				<label for="City">City:</label>
+				<!-- onkeypress="mycity()" -->
+				 <input type="text" class="form-control" id="mycitysearch" placeholder="Type City">
+				 </div>
+				 <div class="form-group">
+					<label for="sel1">Type of Coaching:</label>
+					<select class="form-control" id="type">
+						<option>Engineering</option>
+						<option>Medical</option>
+						<option>SSC & Bank</option>
+						<option>MBA</option>
+						<option>Civil Services</option>
+						<option>Commerece</option>
+						<option>Defence</option>
+						<option>Law</option>
+						<option>School</option>
+						<option>Others</option>
+					</select>
+				  </div>
+				  
+					<button type="button" class=" btn-primary" onclick="allCoachings()">Search</button>
+		</form>
+		</div>
+	  </div>
+
+	  <!-- Home Section End -->
+
+	<div class="container aboutus" id="about">
+        <h2 class="hclass">About Us</h2>  <br />
+        <p class="para">
+          We are a group of Innovators working on Solving the Real world Problem of Eduactaion
+		  Shouloudz is an ed-tech startup which is working on cutting-edge technologies to make the career of students better.
+		   Our basic aim is to help students by providing them Right coaching centers, counselors. We are also helping
+		   Students To get real time review of Different Coaching Centers. 
+		   We Are also helping Coaching owners to reach more number of Students.
+        </p>
+	</div>
+	
+	<!-- About Us Section End -->
+
+	<div class="formdiv" id="contact">
+        <form id="contactusform" method="POST" action="">
+            <h2 class="hclass">Contact Us</h2> <br />
+            <div class="input-container">
+                <i class="fa fa-user fa-2x icon"></i>
+                <input class="input-field" type="text" id="name" placeholder="Enter Name" required />
+            </div>
+            <div class="input-container">
+                <i class="fa fa-envelope-o fa-2x icon"></i>
+                <input class="input-field" type="text" id="email" placeholder="Enter Email"required />
+            </div>
+            <div class="input-container">
+                <i class="fa fa-question-circle fa-2x icon" aria-hidden="true"></i>
+                <input class="input-field" type="textarea" id="query" placeholder="Enter Query" required />
+            </div>
+            <button type="button" class="btn btn-primary contactbtn" onclick="contactus()" >Submit</button>
+        </form>
+	</div>
+	<div id="includedContentfooter"></div> 
+	
+<script>
+
+
+async function allCoachings() {
+
+var coachingdetaildata = [];
+var city=$('#mycitysearch').val();
+var type=$('#type :selected').text();
+var url= "http://localhost:8082/detailcityandtype/"+city+"/"+type;
+
+let response = await fetch(url);
+let data1 = await response.json();
+console.log('data1',data1)
+console.log(data1[0].id,'id')
+		for(var i=0;i<data1.length;i++){
+						var obj=data1[i];
+						
+						var newDiv = document.createElement('div');
+                         newDiv.id="n"+i;
+						newDiv.className="form-group col-md-4";
+						$(".form-group").css({ "margin-bottom": "1rem","box-shadow": "0 0 10px #D3D3D3", "margin-top": "3rem","margin-left": "10rem"});
+
+						   var h2 = document.createElement('h2');
+							h2.innerHTML=obj.coachingname;	
+							$("h2").css({"color":"black","font-size":"30px"});
+							newDiv.appendChild(h2);
+
+							var h2=document.createElement('h2');
+							h2.innerHTML=obj.coachingcity;
+							console.log(obj.coachingcity)
+							$("h2").css({"color":"red","font-size":"15px"});
+							newDiv.appendChild(h2);
+
+							var p=document.createElement('p');
+							p.innerHTML=obj.pros;
+							$("p").css({"display":"block","font-size":"20px"});
+							newDiv.appendChild(p);    
+							
+							var p=document.createElement('p');
+							p.innerHTML=obj.cons;
+							$("p").css({"display":"block","font-size":"20px"});
+							newDiv.appendChild(p); 
+							
+							var p=document.createElement('p');
+							p.innerHTML=obj.suggestions;
+							$("p").css({"display":"block","font-size":"20px"});
+                            newDiv.appendChild(p); 
+                            
+                            var button =document.createElement('button');
+                            button.innerHTML="More Details";
+                            newDiv.appendChild(button);
+                            button.id= i;
+                            console.log(button.id);
+                            urltogo=obj.url;
+                           console.log(urltogo)
+                          
+							$("#parent").css({"width": "1300px","min-height":"100px"});
+						    document.getElementById("parent").appendChild(newDiv);
+	
+		}
+$("#coachingsearch")[0].reset();
+}
+
+function mycity(){
+	var cities = [];
+var val=document.getElementById("ccity").value;
+var url= "http://localhost:8082/citieslist/"+val;
+
+$.ajax({
+	type : "GET",
+	dataType : "json",
+	url :url,
+	
+	success : function(data) {
+		e.preventDefault();
+		console.log("response:" + data);
+		cities.push(data);
+		console.log("response array:" + cities);
+		/* /* $.each(data, function(j, pdata) {
+			val = val + data;
+		});
+		$("#data").text(val); */ 
+		
+	},
+	error : function(jqXHR, textStatus, errorThrown) {
+		console.log(' Error in processing! ' + textStatus);
+	}
+});
+}
+
+
+
+
+
+
+function contactus(){
+	var obj={
+		"fname":$('#name').val(),
+		"email":$('#email').val(),
+		"query":$('#query').val()
+	}
+
+	$.ajax({
+		    contentType: 'application/json',
+			type:"POST",
+			url:"http://localhost:8082/contactus",
+			data: JSON.stringify(obj),
+			success: function(data){
+		        console.log("Conatct Us Form Submitted , Thank You!");
+				document.querySelector(".contactbtn").addEventListener('click', function(){
+                  swal("Thank You!", "Conatct Us Form Submitted", "success");
+                });
+		    },
+		    error: function(){
+		        console.log("Not Submitted");
+		    }
+	});
+	$("#contactusform")[0].reset();
+}
+
+
+
+	function mycity13(){
+	
+	var obj={
+		"id":"40",
+		"name":document.getElementById("name").value,
+		"description":document.getElementById("description").value,
+		"type":document.getElementById("type").value,
+		"city":document.getElementById("city").value
+	}
+	
+	console.log(obj.id);
+	console.log(obj.name);
+		$.ajax({
+			contentType: 'application/json',
+			type:"POST",
+			url:"http://localhost:8082/addcoachingdetails",
+			//data: '{"name":"shubham tiwari classes ","description":"good coaching ","type":"type3","city":"khanpuaaara"}',
+			data: JSON.stringify(obj),
+		//	dataType: 'json',
+			success: function(data){
+		        console.log("device control succeeded",data);
+		    },
+		    error: function(){
+		        console.log("Device control failed");
+		    }
+		});
+		$("#form")[0].reset();
+	}	
+
+
+
+
+
+	function mycity1(){
+	//	var cityarr=[];
+	//	var val=document.getElementById("mycity2").value;
+	var obj = $('form').serializeJSON();
+	
+	console.log(obj.id);
+	console.log(obj.name);
+		$.ajax({
+			contentType: 'application/json',
+			type:"POST",
+			url:"http://localhost:8082/addcoachingdetails",
+			//data: '{"name":"shubham tiwari classes ","description":"good coaching ","type":"type3","city":"khanpuaaara"}',
+			data: JSON.stringify(obj),
+		//	dataType: 'json',
+			success: function(data){
+		        console.log("device control succeeded",data);
+		    },
+		    error: function(){
+		        console.log("Device control failed");
+		    }
+		});
+		$("#form")[0].reset();
+	}	
+
+	function update(){
+	//	$("#id").val(22);
+		//$("#id").value="22";
+	//	document.getElementById("id").value=22;
+		var id="41";
+    
+		var obj = $('form').serializeJSON();
+		//obj.id=22;
+		//id: $(this).val(), 
+		console.log(obj);
+		var	url= "http://localhost:8082/updatedetail/"+id;
+
+		$.ajax({
+			contentType: 'application/json',
+   url: url,
+   type: 'PUT',
+   data: JSON.stringify(obj),
+   success: function(data) {
+    console.log("device control update succeeded",data);
+   }
+});
+$("#form")[0].reset();
+	}
+
+	function deleteform(){
+		$.ajax({
+    url: 'http://localhost:8082/deletedetail/21',
+    type: 'DELETE',
+    success: function(result) {
+        console.log("delete success")
+    }
+});
+
+	}
+
+	function getByid(){
+		var id=22;
+		var url= "http://localhost:8082/getcoachingbyid/1";
+		
+		$.ajax({
+			type : "GET",
+			dataType : "json",
+			url :url,
+			success : function(data) {
+				console.log("response:" + data.name);
+				
+				document.getElementById("name").value=data.name;
+				document.getElementById("description").value=data.description;
+				document.getElementById("type").value=data.type;
+				document.getElementById("city").value=data.city;
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				console.log(' Error in processing! ' + textStatus);
+			}
+		});
+	}
+	
+	$( document ).ready( function(){
+      localStorage.clear();
+	});
+	//updatestatus
+	//onsubmit click https://stackoverflow.com/questions/29599968/calling-rest-webservice-using-jquery-ajax
+	//https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_autocomplete
+
+
+// show News Method will go here
+
+</script>
+ 
+	<!-- Bootstrap related JavaScript -->
+	
+	<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="/jquery.serializejson.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<script src="./js/review.js"></script>
+</body>
+</html>

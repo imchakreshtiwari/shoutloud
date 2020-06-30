@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
+    media="screen" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="./js/review.js"></script>
+  <!-- <link rel="stylesheet" href="./css/main1.css"> -->
+  <title>Document</title>
+  <style>
+    .form-group {
+      margin: 2rem;
+      box-shadow: rgb(211, 211, 211) 0px 0px 10px;
+    }
+
+    label {
+      display: inline-block;
+      width: 140px;
+      text-align: right;
+    }
+
+    ​
+  </style>
+
+  <script src="jquery.js"></script>
+  <script>
+    $(function () {
+      $("#includedContent").load("Navbar.html");
+      $("#includedContentfooter").load("footer.html");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="includedContent"></div>
+  <div class="d-flex justify-content-center" id="loader">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="container">
+    <div id="parent" class="row">
+
+    </div>
+    <script>
+      $(document).ready(async function () {
+        var city = localStorage.getItem("city");
+        var type = localStorage.getItem("type");
+        //  debugger;
+
+        // "id": 4,
+        // "name": "Anuj classes",
+        // "description": "This i sa d jgj",
+        // "meta": "good coaching",
+        // "democlasses": "YES",
+        // "parking": "YES",
+        // "visibilitystatus": 0,
+        // "type": "Math",
+        // "city": "kanpur",
+        // "coachingAddress": null,
+        // "coachingSubjectFee": null,
+        // "coachingContact": null
+
+        $('#loader').show();
+        var url = "http://127.0.0.1:8082/detailcityandtype/" + city + "/" + type;
+        let response = await fetch(url);
+        let data1 = await response.json();
+
+        if (response.status == 200) {
+          // debugger;
+          console.log("inside if loader hide")
+          $('#loader').hide();
+        }
+        for (var i = 0; i < data1.length; i++) {
+          debugger;
+          var obj = data1[i];
+
+          var newDiv = document.createElement('div');
+          newDiv.id = "n" + i;
+
+          newDiv.className = "form-group col-md-3";
+          $(".form-group").css({
+            "margin": "2rem",
+            "box-shadow": "0 0 10px #D3D3D3"
+          });
+
+          var f = document.createElement("form");
+
+          var l = document.createElement("LABEL");
+          var i = document.createElement("input"); //input element, text
+          i.setAttribute('type', "text");
+          i.setAttribute('name', "username");
+          l.innerHTML = "Name: ";
+          i.value = obj.name;
+          i.disabled = true;
+          f.appendChild(l);
+          f.appendChild(i);
+
+          newDiv.appendChild(f);
+
+          /* var label = document.createElement("LABEL");
+          var h2 = document.createElement('h2');
+          h2.innerHTML=obj.name;	
+          label.innerHTML="Name : ";
+          $("h2").css({"color":"yellow","font-size":"30px","float":"right","margin-right":"20px"});
+          newDiv.appendChild(label);
+          newDiv.appendChild(h2); */
+          /* 
+                        var label = document.createElement("LABEL");
+          							var h2=document.createElement('h2');
+                        h2.innerHTML=obj.description;
+                        label.innerHTML="Description : "
+                        $("h2").css({"color":"red","font-size":"15px"});
+                        newDiv.appendChild(label);
+          							newDiv.appendChild(h2);
+
+                        var label = document.createElement("LABEL");
+          							var p=document.createElement('p');
+                        p.innerHTML=obj.democlasses;
+                        label.innerHTML="DemoClasses : "
+                        $("p").css({"display":"block","font-size":"20px"});
+                        newDiv.appendChild(label);
+          							newDiv.appendChild(p);    
+                        
+                        var label = document.createElement("LABEL");
+          							var p=document.createElement('p');
+                        p.innerHTML=obj.parking;
+                        label.innerHTML="Parking : "
+                        $("p").css({"display":"block","font-size":"20px"});
+                        newDiv.appendChild(label);
+          							newDiv.appendChild(p); 
+                        
+                        var label = document.createElement("LABEL");
+          							var p=document.createElement('p');
+                        p.innerHTML=obj.type;
+                        label.innerHTML="Type : "
+                        $("p").css({"display":"block","font-size":"20px"});
+                        newDiv.appendChild(label);
+                        newDiv.appendChild(p);  */
+
+          /* var button =document.createElement('button');
+          button.innerHTML="More Details";
+          newDiv.appendChild(button);
+          button.id= i;
+          console.log(button.id); */
+
+
+          $("#parent").css({
+            "width": "100%",
+            "min-height": "100px"
+          });
+          document.getElementById("parent").appendChild(newDiv);
+        }
+        /* $('button').on("click", function (e) {
+          ///getcoachingbyid/{id}
+          debugger;
+          var obj1 = data1[this.id]
+          console.log(obj1.id)
+          var id = obj1.id;
+          localStorage.setItem("id", id);
+          window.location.href = 'http://127.0.0.1:8082/alldetail.html';
+          // window.open("http://127.0.0.1:8082/alldetail.html")
+
+        }); */
+
+
+
+      });
+    </script>
+  </div>
+
+</body>
+
+</html>

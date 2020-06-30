@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
+    media="screen" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <script src="./js/review.js"></script>
+  <link rel="stylesheet" href="./css/main1.css">
+  <title>Document</title>
+  <style>
+    #myModal {
+      display: none;
+    }
+    
+  </style>
+  <script src="jquery.js"></script>
+  <script>
+    $(function () {
+      $("#includedContent").load("Navbar.html");
+    });
+  </script>
+</head>
+
+<body>
+  <div id="includedContent"></div>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal"
+    id="connectButton">Connect</button>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <!-- <h4 class="modal-title">Send Mail</h4> -->
+        </div>
+        <div class="modal-body">
+          <!-- <p>Some text in the modal.</p> -->
+          <form id="contactusform" method="POST" action="">
+            <h2 class="hclass">Contact Us Form</h2>
+            <div class="input-container">
+              <i class="fa fa-user fa-2x icon"></i>
+              <input class="input-field" type="text" id="name" placeholder="Enter Name" required />
+            </div>
+            <div class="input-container">
+              <i class="fa fa-mobile fa-2x icon"></i>
+              <input class="input-field" type="text" id="phnno" placeholder="Enter Mobile Number" required />
+            </div>
+            <div class="input-container">
+              <i class="fa fa-envelope-o fa-2x icon"></i>
+              <input class="input-field" type="text" id="email" placeholder="Enter Email" required />
+            </div>
+            <div class="input-container">
+              <i class="fa fa-question-circle fa-2x icon"></i>
+              <input class="input-field" type="textarea" id="query" placeholder="Enter Query" required />
+            </div>
+            <button type="button" class="btn btn-primary contactbtn" onclick="sendMail()">Submit</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+
+
+  <div class="container">
+    <div id="parent" class="row">
+
+    </div>
+
+    <script>
+      $("#connectButton").hide();
+      $(document).ready(async function () {
+        var id = localStorage.getItem("id");
+        var url = "http://127.0.0.1:8082/getcoachingbyid/" + id;
+        console.log('url==', url)
+
+        let response = await fetch(url);
+        let data1 = await response.json();
+        if (response.status == 200) {
+         
+          $("#connectButton").show();
+        }
+
+        console.log(data1)
+
+      
+
+
+        var obj = data1;
+
+        var newDiv = document.createElement('div');
+       
+
+        newDiv.className = "form-group col-md-4";
+        $(".form-group").css({
+          "margin-bottom": "2rem",
+          "box-shadow": "0 0 10px #D3D3D3"
+        });
+
+        var label = document.createElement("LABEL");
+        var h2 = document.createElement('h2');
+        h2.innerHTML = obj.name;
+        label.innerHTML = "Name : ";
+        $("h2").css({
+          "color": "yellow",
+          "font-size": "30px",
+          "float": "right",
+          "margin-right": "120px"
+        });
+        newDiv.appendChild(label);
+        newDiv.appendChild(h2);
+
+        var label = document.createElement("LABEL");
+        var h2 = document.createElement('h2');
+        h2.innerHTML = obj.city;
+        label.innerHTML = "City : "
+        $("h2").css({
+          "color": "red",
+          "font-size": "15px"
+        });
+        newDiv.appendChild(label);
+        newDiv.appendChild(h2);
+
+        var label = document.createElement("LABEL");
+        var p = document.createElement('p');
+        p.innerHTML = obj.parking;
+        label.innerHTML = "Parking : "
+        $("p").css({
+          "display": "block",
+          "font-size": "20px"
+        });
+        newDiv.appendChild(label);
+        newDiv.appendChild(p); 
+
+        var label = document.createElement("LABEL");
+        var p = document.createElement('p');
+        p.innerHTML = obj.description;
+        label.innerHTML = "Description : "
+        $("p").css({
+          "display": "block",
+          "font-size": "20px"
+        });
+        newDiv.appendChild(label);
+        newDiv.appendChild(p);
+
+        localStorage.setItem("to", obj.name);
+        $("#parent").css({
+          "width": "100%",
+          "min-height": "100px"
+        });
+        document.getElementById("parent").appendChild(newDiv);
+
+      });
+    </script>
+  </div>
+</body>
+
+</html>

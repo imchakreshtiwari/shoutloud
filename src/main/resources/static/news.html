@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>  
+	<title>News</title>
+	<link rel="stylesheet" href="./css/main1.css">
+	<style>
+		.container{
+			margin-top: 10px;
+            width: 70%;
+		}
+	</style>
+	<script src="jquery.js"></script>
+	<script>
+	  $(function () {
+		$("#includedContent").load("Navbar.html");
+	  });
+	</script>
+</head>
+<body>
+	<div id="includedContent"></div> 
+
+<div class="container">
+    <div id="parent" class="row">
+		<!-- <button type="button" class="btn btn-default" onclick="showNews()" id="showNews">Show Newz</button>  -->
+		<h3> In this Page you  can Check  Different Category of Latest News Select One</h3> 
+		<button type="button" class="btn-success" onclick="showNews()" id="showNews">Show  World Newz</button> 
+	</div>
+</div>
+    <script>
+        function showNews(){
+			
+		var id=22;
+		var url= "https://newsapi.org/v2/top-headlines?sources=google-news&apiKey=53599fbacfe4481aa45b5814ca700ab6";
+		
+		$.ajax({
+            type : "GET",
+            crossDomain: true,
+			dataType : "json",
+			//headers: { "APIKey": "53599fbacfe4481aa45b5814ca700ab6" },
+            url :url,
+            
+			success : function(data) {
+				$('#showNews').hide();
+				console.log("response:" + data);
+				//for setting data into div
+				data=JSON.stringify(data);
+				//$('#container').html(data);
+				data=JSON.parse(data);
+				console.log(data.status);
+				console.log(data.articles);
+				var arr=data.articles;
+				console.log("array length",arr.length)
+				for(var i=0;i<=arr.length;i++){
+						var obj=arr[i];
+						var newDiv = document.createElement('div');
+                        newDiv.id="n"+i;
+           
+                        newDiv.className="form-group col-md-4";
+                     //   $(".form-group").css({"height":"100px","width":"500px","border":"0px solid silver","float":"left"})
+					 $(".form-group").css({ "margin-bottom": "1rem","box-shadow": "0 0 10px #D3D3D3", "margin-top": "3rem","margin-left": "10rem"});
+					 
+
+
+						//newDiv.innerHTML="div"+i;
+							var h1 = document.createElement('h1');
+							h1.innerHTML=obj.title;
+							$("h1").css({"color":"black","font-size":"30px"});
+							newDiv.appendChild(h1);
+
+							var h4=document.createElement('h4');
+							h4.innerHTML=obj.author;
+							$("h4").css({"color":"red","font-size":"15px"});
+							newDiv.appendChild(h4);
+
+							var p=document.createElement('p');
+							p.innerHTML=obj.description;
+							$("p").css({"display":"block","font-size":"20px"});
+                            newDiv.appendChild(p);       
+                            
+                            var button =document.createElement('button');
+                            button.innerHTML="More Details";
+                            newDiv.appendChild(button);
+                            button.id= i;
+                            console.log(button.id);
+                            urltogo=obj.url;
+                           console.log(urltogo)
+                          
+							$("#parent").css({"width": "1300px","min-height":"100px"});
+						document.getElementById("parent").appendChild(newDiv);
+
+
+//setting value only on one html tag
+						// $('#title').html(obj.title);
+						// $('#author').html(obj.author);
+						// console.log("obj.description",obj.description);
+						// $('#description').html(obj.description);
+                }
+                
+                $('button').on("click",  function(e){
+                          var articles = data.articles;
+                          console.log(articles[this.id]);
+                           e.preventDefault();
+                            console.log(this.id);   
+                            window.open( articles[this.id].url) ;
+                            
+                       });
+                
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				$('#showNews').show();
+				console.log(' Error in processing! ' + textStatus);
+			}
+        });
+        
+	}
+    </script>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

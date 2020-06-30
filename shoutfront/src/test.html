@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+    
+    
+</head>
+<body>
+        <div class="ui-widget">
+                <label for="city">Your city: </label>
+                <input id="city">
+            
+              </div>
+              
+              <div class="ui-widget" style="margin-top:2em; font-family:Arial">
+                Result:
+                <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
+              </div>
+              <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+    <script>
+     $(function() {
+    function log( message ) {
+      $( "<div>" ).text( message ).prependTo( "#log" );
+      $( "#log" ).scrollTop( 0 );
+    }
+
+    $( "#city" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "http://localhost:8081/getcontactus",
+          dataType: "jsonp",
+          data: {
+            q: request.name
+          },
+          success: function( data ) {
+            response( data );
+          }
+        });
+      },
+      minLength: 3,
+      select: function( event, ui ) {
+        log( ui.item ?
+          "Selected: " + ui.item.label :
+          "Nothing selected, input was " + this.value);
+      },
+      open: function() {
+        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+      },
+      close: function() {
+        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
+    });
+  });
+    </script>
+</body>
+</html>

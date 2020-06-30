@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+    <title>Document</title>
+  
+    </script> 
+    <style>
+      form-control {
+          background-color: white;
+        border: none;
+}
+label {
+  display: inline-block;
+  width: 140px;
+  text-align: right;
+}​
+
+    </style>
+</head>
+<body>
+
+  <div class="container">
+      <div id="parent" class="row"></div>
+          
+      <script>
+        var newDiv = document.createElement('div');
+        var f = document.createElement("form");
+
+ var l = document.createElement("LABEL"); 
+var i = document.createElement("input"); //input element, text
+i.setAttribute('type',"text");
+i.setAttribute('name',"username");
+l.innerHTML="Name: ";
+i.value="Name";
+i.disabled=true;
+
+var l2= document.createElement("LABEL"); 
+var input = document.createElement("input"); //input element, text
+debugger;
+input.classList.add("mystyle");
+l2.innerHTML="City: ";
+input.setAttribute('type',"text");
+input.setAttribute('name',"username");
+input.innerHTML="City: ";
+input.value="City";
+input.disabled=true;
+$('.form-input').css({"border":"none","background-color":"white"});
+
+var s = document.createElement("input"); //input element, Submit button
+s.setAttribute('type',"submit");
+s.setAttribute('value',"Submit");
+f.appendChild(l);
+f.appendChild(i);
+
+f.appendChild(l2);
+f.appendChild(input);
+f.appendChild(s);
+
+//and some more input elements here
+//and dont forget to add a submit button
+newDiv.appendChild(f);
+//document.getElementsByTagName('body')[0].appendChild(f);
+document.getElementById("parent").appendChild(newDiv);
+     </script>
+ </div>
+    
+</body>
+</html>
+
+

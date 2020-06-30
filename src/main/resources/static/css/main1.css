@@ -1,0 +1,95 @@
+body, html {
+    height: 100%;
+    width: 100%;
+  }
+  #showNews{
+    float: right;
+    margin-top: 13px;
+    background-color: black;
+}
+/* About Us Css */
+.container{
+  height: auto;
+  width: 600px;
+  margin: 10px auto;
+  border: 20px ,blue;
+}
+.hclass{
+  text-align: center;
+  color: blue;
+  font-size: 60px;
+  font-family: cursive;
+}
+.para{
+  text-align: center;
+  color: black;
+  font-size: 20px;
+  font-family: cursive;
+}
+
+/* Conatact Us Css */
+.input-container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.icon {
+  padding: 10px;
+  background: dodgerblue;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+/* Style the input fields */
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+.formdiv{
+   height: auto;
+   width: 600px;
+  margin: 10px auto;
+  border: 20px ,blue;
+}
+
+.post {
+  border: 0px solid silver;
+  float: left;
+  margin-top: 71px;
+  height: 280px;
+  padding: 7px;
+  width: 650px;
+  box-shadow: 0 0 10px #D3D3D3;
+    
+}
+body > div.row > div:nth-child(1){
+  margin-left: 213px;
+}
+body > div.row > div:nth-child(2){
+  margin-left: 80px;
+}
+
+.form-group{
+  box-shadow: 0 0 10px #D3D3D3;
+  background-color: aquamarine;
+}
+label{
+  margin-left: 15px;
+  background-color: blanchedalmond;
+}
+
+/* div css */
+#parent {
+	border: 1px solid silver;
+	width: 1000px;
+	min-height: 100px;
+	
+}
+/* News div css */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write Review</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+    <link rel="stylesheet" href="./css/main1.css">
+    <style>
+         .form{
+            height: 700px;
+            width: 600px;
+            margin: 10px auto;
+            border: 20px ,blue;
+        }
+        .row{
+          display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: 15px;
+    margin-left: 15px;
+        }
+        .form-control[readonly]{
+          background-color: white
+        }
+    </style>
+ <script> 
+  $(function(){
+    $("#includedContent").load("Navbar.html"); 
+    $("#includedContentfooter").load("footer.html"); 
+  });
+  </script> 
+</head>
+<body>  
+<div id="includedContent"></div> 
+    <div class="form">
+        <h2>Add Review Form</h2> <br />
+        <form  class="form-horizontal" id ="Addreviewform" autocomplete="off">
+            <div class="form-group">
+                <label for="Name">Coaching Name:</label>
+                <input type="text" class="form-control" placeholder="Enter Coaching Name" id="cname">
+              </div>
+              <div class="form-group">
+                <label for="Description">Coaching City:</label>
+                <input type="text" class="form-control" placeholder="Enter Coaching City" id="ccity">
+              </div>
+              <div class="form-group">
+                <label for="Tags">Coaching Pros:</label>
+                <input type="textarea" class="form-control" placeholder="Enter Coaching Pros" id="cpros">
+              </div>
+              <div class="form-group">
+                <label for="Description">Coaching Cons:</label>
+                <input type="textarea" class="form-control" placeholder="Enter Coaching Cons" id="ccons">
+              </div>
+              <div class="form-group">
+                <label for="Tags">Coaching Suggestion:</label>
+                <input type="textarea" class="form-control" placeholder="Enter Coaching Suggestion" id="csuggestion">
+              </div>
+
+              <div class="form-group">
+                
+                <label for="Tags"><b>Coaching Review Criteria:</b></label>
+                <div class="row">
+                  <div class="col-md-6">
+                    <input type="text" class="form-control criterianame"  id="criterianame" value="Cleanliness" readonly />
+                    <input type="text" class="form-control criterianame"  id="criterianame" value="Quality of Edu." readonly />
+                    <input type="text" class="form-control criterianame"  id="criterianame" value="Teacher Quality" readonly />
+                    <input type="text" class="form-control criterianame"  id="criterianame" value="Fees" readonly />
+                  </div>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control criteriaValues"  id="Cleanliness" placeholder="Rateing Between 1 to 10" >
+                    <input type="text" class="form-control criteriaValues"  id="Quality_of_Edu" placeholder="Rateing Between 1 to 10" >
+                    <input type="text" class="form-control criteriaValues"  id="Teacher_Quality" placeholder="Rateing Between 1 to 10" >
+                    <input type="text" class="form-control criteriaValues"  id="Fees" placeholder="Rateing Between 1 to 10" >
+                  </div>
+                </div>
+               
+              </div>
+              <button type="button" class="btn btn-primary addreviewbtn" onclick="addcoachingreview()">Submit</button>
+    </div>
+
+    <script>
+ function addcoachingreview(){
+
+   var arr = [];
+  $(".criteriaValues").each(function(){
+    var criterianame =$(this).attr("id");
+    var criteriaValue = $(this).val();
+    item = {}
+    item["criterianame"] = criterianame;
+    item["criteriaValue"] = criteriaValue;
+    arr.push(item);
+   })
+
+	var obj={
+		
+		    "coachingname":$("#cname").val(),
+        "coachingcity":$("#ccity").val(),
+        "pros":$("#cpros").val(),
+        "cons":$("#ccons").val(),
+        "suggestions":$("#csuggestion").val(),
+        "reviewCriteria":arr
+       
+    }
+ console.log('obj',obj);
+ var ar = document.querySelectorAll("input.criterianame");
+	console.log("reviewCriteria",ar.value);
+// 	{
+//     "coachingname":"abcc","coachingcity":"kanpur","pros":"good","cons":"nadbb","suggestions":"improve",
+//     "reviewCriteria":[{"criterianame":10,"criteriaValue":12},{"criterianame":10,"criteriaValue":12}]
+// }
+
+
+		$.ajax({
+			contentType: 'application/json',
+			type:"POST",
+			url:"http://localhost:8082/addcoachingreview",
+            data: JSON.stringify(obj),
+			success: function(data){
+                console.log("device control succeeded",data);
+                document.querySelector(".addreviewbtn").addEventListener('click', function(){
+                      swal("Thank You!", "Coaching Review Submitted ", "success");
+                });
+		    },
+		    error: function(){
+		        console.log("Form  Data failed");
+		    }
+		});
+		$("#Addreviewform")[0].reset();
+	}
+    </script>
+</body>
+</html>

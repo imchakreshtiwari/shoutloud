@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NavBar</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
+    media="screen" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+  <link rel="stylesheet" href="./css/navbar.css">
+</head>
+<style>
+  .modal-header {
+    padding: 0;
+  }
+
+  .modal-header .close {
+    padding: 10px 15px;
+  }
+
+  .modal-header ul {
+    border: none;
+  }
+
+  .modal-header ul li {
+    margin: 0;
+  }
+
+  .modal-header ul li a {
+    border: none;
+    border-radius: 0;
+  }
+
+  .modal-header ul li.active a {
+    color: #e12f27;
+  }
+
+  .modal-header ul li a:hover {
+    border: none;
+  }
+
+  .modal-header ul li a span {
+    margin-left: 10px;
+  }
+
+  .modal-body .form-group {
+    margin-bottom: 10px;
+  }
+</style>
+
+<body>
+  <div class="topnav" id="myTopnav">
+    <a href="index.html#home" class="active">Home</a>
+    <a href="news.html">News</a>
+    <a href="index.html#contact">Contact</a>
+    <a href="index.html#about">About</a>
+    <a href="writreview.html">Write a Review</a>
+    <a href="addcoachinform.html">Add Coaching</a>
+    <a  data-toggle="modal" data-target=".login-register-form" style="color: white;">
+      Login
+    </a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa fa-bars"></i>
+    </a>
+  </div>
+  <script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+  </script>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="modal fade login-register-form" role="dialog" id="myModal">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">
+                <span class="glyphicon glyphicon-remove"></span>
+              </button>
+              <ul class="nav nav-tabs">
+                <li class="active"><a data-toggle="tab" href="#login-form"> Login <span
+                      class="glyphicon glyphicon-user"></span></a></li>
+                <li><a data-toggle="tab" href="#registration-form"> Register <span
+                      class="glyphicon glyphicon-pencil"></span></a></li>
+              </ul>
+            </div>
+            <div class="modal-body">
+              <div class="tab-content">
+                <div id="login-form" class="tab-pane fade in active">
+                  <form action="/">
+                    <div class="form-group">
+                      <label for="email">Email:</label>
+                      <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+                    </div>
+                    <div class="form-group">
+                      <label for="pwd">Password:</label>
+                      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">
+                    </div>
+                    <div class="checkbox">
+                      <label><input type="checkbox" name="remember"> Remember me</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </form>
+                </div>
+                <div id="registration-form" class="tab-pane fade">
+                  <form action="/">
+                    <div class="form-group">
+                      <label for="name">Your Name:</label>
+                      <input type="text" class="form-control" id="name" placeholder="Enter your name" name="name">
+                    </div>
+                    <div class="form-group">
+                      <label for="newemail">Email:</label>
+                      <input type="email" class="form-control" id="newemail" placeholder="Enter new email"
+                        name="newemail">
+                    </div>
+                    <div class="form-group">
+                      <label for="newpwd">Password:</label>
+                      <input type="password" class="form-control" id="newpwd" placeholder="New password" name="newpwd">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                  </form>
+                </div>
+
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
